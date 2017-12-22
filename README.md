@@ -68,9 +68,9 @@ Set wOb_C = ActiveWorkbook
 
 If wOb_C.Name <> "OB_C.xlsx" Then
  MsgBox "File Excel NON Corretto!" _
-         & vbCrLf & vbCrLf & "verifica che file attivo sia OB_C.xlsx" _
-         & vbCrLf & vbCrLf & "Interuzione Macro senza Alcuna Conseguenza!", _
-         vbCritical, "Macr@ris messaggio di errore"
+        & vbCrLf & vbCrLf & "verifica che file attivo sia OB_C.xlsx" _
+        & vbCrLf & vbCrLf & "Interuzione Macro senza Alcuna Conseguenza!", _
+        vbCritical, "Macr@ris messaggio di errore"
  Exit Sub ''Fine esecuzione Macro
 End If
 
@@ -139,9 +139,9 @@ Application.ScreenUpdating = False
  Dim shOb_C As Worksheet '' Dichiarazione di una variabile come oggetto foglio
 
 '' Assegna il foglio 1 alla variabile foglio dichiarata alla riga precedente
-    Set shOb_C = wOb_C.Sheets(1)
+    Set shOb_C = wOb_C.Sheets(1)
 '' Rinomina il foglio rappresentato da shOb_C    
-    shOb_C.Name = "Ordini Bloccati-clienti arancio"
+    shOb_C.Name = "Ordini Bloccati-clienti arancio"
 ``` 
 
 ### Copiare Fogli da una Cartella a un'altra in Excel VBA
@@ -172,10 +172,10 @@ Dim CrSh As Worksheet '' Dichiarazione di una variabile oggetto Foglio
 '' Matrice Aris Cerca verticale su file compensi collectors
 '' La struttura matriciale è molto più veloce che lavorare sui
 '' file Excel
-            
+
  Dim Cy As String
  '' Assegna alla variabile "Cy" l'anno corrente
-    Cy = Format(Now, "YYYY")
+    Cy = Format(Now, "YYYY")
     
 ''Dichiarazione di una variabile oggetto Cartella    
 Dim wCompensiColl As Workbook
@@ -332,20 +332,31 @@ Next i
 ''Ripristina la gestione di errori generici
 On Error GoTo 0
 On Error GoTo ErrorHandler
-    [G2].Resize(UBound(avlookup, 1), 1).Value = avResult   ''Restituisce i risultati della ricerca verticale dalla cella G2 in poi.
-                                                            '' I risultati sono presi dalla matrice avResult
-       
-    ''### Arrayaris fine cerca vert su file bloccati settimana precedente
 
-'###FREEZE Panes    ''blocca riquadri da posizione cella J2
+'' Restituisce i risultati della ricerca verticale dalla cella G2 in poi.
+'' I risultati sono presi dalla matrice avResult
+    [G2].Resize(UBound(avlookup, 1), 1).Value = avResult
+       
+''### Conclude la parte di uso di funzione "CERCA.VERT" su file 
+'' Ordini bloccati della settimana precedente.
+'' Notare che mentre in Excel abbiamo la traduzione della funzione
+'' CERCA.VERT, IN VBA tutti i commandi sono in INGLESE QUINDI
+'' PER LA RICERCA VERTICALE SI USA "VLOOKUP"
+```
+
+### ...Prosegue con un interessante esempio su Cicli For...Next e Unisci Celle
+
+```vb
+''blocca riquadri da posizione cella J2
     ActiveWindow.ScrollColumn = 1
     Range("J2").Select
     ActiveWindow.FreezePanes = True
 
-'Sub LoopTroughOrdersBlocked()
-    ''@Per il buon funzionamento di questa macro, la colonna numero 8 deve essere ordinata in modo crescente.
-    ''La macro esamina e seleziona i duplicati nella colonna 8 e quindi nella colonna corrispondente alla selezione fa un UNISCI CELLE
-    ''quindi lo scopo e' unire e centrare tutte le celle in corrispondenza di + posizioni dello stesso cliente nella colonna "Azioni/Commenti"
+''Sub LoopTroughOrdersBlocked() ' sviluppato iniazialmente a parte!
+'' Per il buon funzionamento di questa macro, la colonna numero 8 deve essere ordinata in modo
+'' crescente. La macro esamina e seleziona i duplicati nella colonna 8 e quindi nella colonna 
+'' corrispondente alla selezione fa un UNISCI CELLE quindi lo scopo è unire e centrare tutte le
+'' celle in corrispondenza di più posizioni dello stesso cliente nella colonna "Azioni/Commenti"
 
 Cells(2, 8).Activate  ''Seleziona la cella riga 2 colonna 8
 
@@ -354,91 +365,123 @@ Dim x As Integer, y As Integer ''Definizione di variabile di traccia riga
 x = ActiveCell.Row   ''L'attuale riga viene assegnata a x
 y = x + 1              '' la riga x+1 viene assegnata a y
 
-Do While Cells(x, 8).Value <> ""  ''Loop A esegue il blocco di codici ripetutamente finche la cella non sara vuota a quel punto
-                                    ''si fermera' il Do While
+'' Loop A esegue il blocco di codici ripetutamente finche la cella non sara vuota
+'' e a quel punto si fermera' il Do While mentre il loop B agisce sui duplicati
+''' di codici clienti per i quali poi applicare "Unisci Celle"
    
+Do While Cells(x, 8).Value <> ""  
     If Cells(x, 8).Value <> Cells(y, 8).Value Then
         Cells(y, 8).Select
     Else
-Do While Cells(x, 8).Value = Cells(y, 8).Value  ''Loop B
+ '' Loop B    
+Do While Cells(x, 8).Value = Cells(y, 8).Value
  
         If Cells(x, 8).Value = Cells(y, 8).Value Then
             Range(Selection, Selection.Offset(1, 0)).Select
         End If
+        
         x = x + 1
         y = x + 1
-        Loop ''Fine Loop B
+''Fine Loop B 
+        Loop
+'' Con "Scarto" seleziona le celle colonna adiacente sinistra
           Selection.Offset(0, -1).Select
-Application.Run "PERSONAL.XLSB!Merge_Cells"
-Selection.Offset(1, 1).Select
+
+'' Riuso di routine in quanto serve anche per altre macro
+'' Applica alle celle selezionate "Unisci Celle"
+        Application.Run "PERSONAL.XLSB!Merge_Cells"
+
+'' Sposta la selezione una riga sotto e una colonna a destra
+    Selection.Offset(1, 1).Select
 End If
 
  x = x + 1
         y = x + 1
-Loop ''Fine Loop A
 
+''Fine Loop A
+Loop
+''#---------------- Termina la parte sui cicli ripetuti e Unisci centra Celle
+```
 
-'#----------------
+### Aggiunta di funzione "SOMMA" e "SCARTO" su intervalli dinamici
+#### Nel senso che possono essere 10 righe come 100
+
+```vb
+
     Cells.Select '' Seleziona tutte le celle
-    Selection.RowHeight = 15 '' alla selezione tutte celle attribuisce altezza righe 15
+ '' Alla selezione tutte celle attribuisce altezza righe 15
+    Selection.RowHeight = 15
 
-'@# Questa sezione  somma il valore di tutti gli ordini inserendo una formula
+''@# Questa sezione  somma il valore di tutti gli ordini inserendo una formula
 
 Dim PrimaCella, lastsumCella As String ''Dichiarazione di due variabili di tipo stringa
 
-PrimaCella = "B2"  '' assegnazione della stringa B2 alla variabile prima cella; servirà per indirizzo di cella nella formula
+'' Assegnazione della stringa B2 alla variabile prima cella; 
+'' servirà per indirizzo di cella nella formula
+PrimaCella = "B2"
 
-lastsumCella = Range("B2").End(xlDown).Offset(-1, 0).Address(rowrelative, columnrelative) ''con la funzione Offset e ADDRESS si rileva l'indirizzo
-                                                                                         '' di dell'ultima cella contenente un valore (agisce in modo
-                                                                                         '' dinamico)
+'' Con la funzione "OFFSET" e "ADDRESS" si rileva l'indirizzo
+'' dell'ultima cella contenente un valore (agisce in modo dinamico)
+lastsumCella = Range("B2").End(xlDown).Offset(-1, 0).Address(rowrelative, columnrelative)
 
+'' Inserisce la formula somma nell'ultima cella di valore
+Range("B2").End(xlDown).Value = "=sum(" & PrimaCella & ":" & lastsumCella & ")"
 
-Range("B2").End(xlDown).Value = "=sum(" & PrimaCella & ":" & lastsumCella & ")"  '' Inserisce la formula somma nell'ultima cella di valore
-      
-    Range(Cells(Range("B1").SpecialCells(xlCellTypeLastCell).Row - 1, "B"), "B2"). _
-                                                                NumberFormat = "#,##0.00_);(#,##0.00)" '' applica formato migliaia a intervallo dati colonna B
-
-'Selection.NumberFormat = "€ #,##0"
-    Cells(Range("B1").SpecialCells(xlCellTypeLastCell).Row, "B").NumberFormat = "€ #,##0" '' Applica formato numero con Euro
+'' applica formato con separatore migliaia a intervallo dati colonna B
+    Range(Cells(Range("B1").SpecialCells(xlCellTypeLastCell). _
+        Row - 1, "B"), "B2").NumberFormat = "#,##0.00_);(#,##0.00)"
+'' Applica formato numero con Euro
+    Cells(Range("B1").SpecialCells(xlCellTypeLastCell).Row, "B").NumberFormat = "€ #,##0"
 
     
 Cells(1, 1).Select '' Seleziona la cella A1
+
 Dim stAttachment As String '' Dichiarazione Variabile stringa
 Dim StPath As String
-         StPath = "T:\CONTABILITA'\RECUPERO CREDITI\file ordini bloccati\BBMI_" & _
-                            Cy & "_Ordini_Bloccati\"   ''Assegnato il percorso ove salvare il file a Stpath
 
-                Dim StFileName As String ''Dichiarazione della variabile per il nome file
-                    StFileName = "Ordini_Bloccati_" & Format(Date, "DD-MM-YYYY") ''assegna nome file con stringa + funzione FORMAT per la data
-                    stAttachment = StPath & StFileName & ".xlsx" ''percorso completo di salvataggio attribuito a StAttachment
+''Assegnato il percorso ove salvare il file a Stpath
+    StPath = "T:\CONTABILITA'\RECUPERO CREDITI\file ordini bloccati\BBMI_" _
+                            & Cy & "_Ordini_Bloccati\"
+
+''Dichiarazione della variabile per il nome file                            
+  Dim StFileName As String
+''assegna nome file con stringa piu' funzione FORMAT per la data
+    StFileName = "Ordini_Bloccati_" & Format(Date, "DD-MM-YYYY")
+''percorso completo di salvataggio attribuito a StAttachment    
+    stAttachment = StPath & StFileName & ".xlsx"
                   
-                  Application.DisplayAlerts = False  '' disattiva tutti messaggi di avvertimento
-                        With ActiveWorkbook  ''con la struttura with salva il file nel percorso definito prima
-                            .SaveAs stAttachment ', FileFormat:=xlOpenXMLWorkbook
-                       End With
-                Application.DisplayAlerts = True  '' Attiva il messaggio di avvertimento
- 
- Application.ScreenUpdating = True  ''Riattia il flash screen di Excel
+    Application.DisplayAlerts = False  '' disattiva tutte le notifiche di avvertimento
+        With ActiveWorkbook  ''con la struttura with salva il file nel percorso definito prima
+            .SaveAs stAttachment ''", FileFormat:=xlOpenXMLWorkbook" argomento facoltativo
+       End With
+    Application.DisplayAlerts = True  '' Attiva il messaggio di avvertimento
+
+'''Riattiva i movimenti dello schermo quando si esegue la macro
+    Application.ScreenUpdating = True
  
  ''...preso dalla mia Macro tracking time
   endtriggerChrono = Now   ''Rileva l'orario di fine Esecuzione
+ 'Calcola la durata dell'esecuzione
+Interval = endtriggerChrono - triggerChrono
 
-Interval = endtriggerChrono - triggerChrono   ''Calcola la durata dell'esecuzione
-
- ' Formato della durata in minuti e secondi
-   
+ '' Formato della durata in minuti e secondi
      strOutput = Int(CSng(Interval * 24 * 60)) & " Minutes :" & Format(Interval, "ss") _
         & " Seconds"
-    ''Debug.Print strOutput
+    ''Debug.Print strOutput "Ha servito solo per test
+    '' il valore viene visualizzato nella finestra immediata
 
-'' Messagio finale di fine elaborazione e durata da variabile strOutput
-MsgBox " Durata Elaborazione Bloccati" & vbCrLf & vbCrLf _
+'' Messagio finale di fine elaborazione e durata di esecuzione
+'' Notare l'uso variabile strOutput
+        MsgBox " Durata Elaborazione Bloccati" & vbCrLf & vbCrLf _
             & strOutput, vbOKOnly + vbInformation, "Macr@ris Tracking Time"
  
- Application.StatusBar = ""  '' re inizializza la barra di stato
- Exit Sub ''Fine macro se errori non riscontrati
- 
-ErrorHandler:  '' Gestione di errore con rilevamento tipo di errore e descrizione
+ '' riattiva le impostazioni predefinite della barra di stato
+ Application.StatusBar = ""
+ Exit Sub '' invoca Fine esecuzione macro se errori non riscontrati
+ ''#-------------
+
+'' Gestione di errore con rilevamento tipo di errore e descrizione
+ErrorHandler:
 MsgBox "Interruzione Macro Causa Errore in Orders_Blocked" & vbNewLine & "Contattare Macr@ris" & vbNewLine & _
     vbCrLf & "Error number:  # " & Err.Number & vbNewLine & _
       "Description:==> " & Err.Description, vbCritical, "Macr@ris \Error Macro"
@@ -447,6 +490,6 @@ Application.ScreenUpdating = True  ''riattiva i movimenti dello schermo
 Application.DisplayAlerts = True  '' riattiva tutti i messagi di avvertimento
 Application.StatusBar = ""        '' riattiva le impostazioni predefinite della barra di stato
 
-End Sub
+End Sub ''Istruzione di fine Esecuzione
 
 ```
