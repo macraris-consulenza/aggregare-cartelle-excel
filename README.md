@@ -226,20 +226,28 @@ avlookup = Range(Cells(Range("H1").SpecialCells(xlCellTypeLastCell).Row - 1, "H"
  '' Con "ReDim" crea un intervallo di dati in matrice di n righe, 1 colonna della stessa
  '' dimensione della matrice "AvLookup"
  ReDim avResult(1 To UBound(avlookup, 1), 1 To 1) 
- 
-For i = 1 To UBound(avlookup, 1) ''ciclo di ripetizione con limite di esecuzione n esima riga della matrice avlookup
 
-    On Error Resume Next   ''ignorare eventuali errori generati nell'esecuzione della macro specie quando il risultato della
-                        ''formula CERCA.VERT restituisce un #N/D
-    
-    avResult(i, 1) = WorksheetFunction.VLookup(avlookup(i, 1) * 1, vaNameColl, 9, 0)  '' CERCA.VERT del dato in riga i nell'intervallo di dati VanameColl
-        If Err.Number = 1004 Then avResult(i, 1) = "Mombrini"  '' se errore di tipo 1004 allora risultato CERCA.VERT = #N/D quindi sostituisci col Nome
+''ciclo di ripetizione con limite di esecuzione n esima riga della matrice avlookup
+For i = 1 To UBound(avlookup, 1)
+
+''ignorare eventuali errori generati nell'esecuzione della macro specie quando il risultato della
+'' formula CERCA.VERT restituisce un #N/D
+    On Error Resume Next  
+'' CERCA.VERT del dato in riga i nell'intervallo di dati VanameColl    
+avResult(i, 1) = WorksheetFunction.VLookup(avlookup(i, 1) * 1, vaNameColl, 9, 0)
+
+'' se errore di tipo 1004 allora risultato CERCA.VERT = #N/D quindi sostituisci col Nome
+    If Err.Number = 1004 Then avResult(i, 1) = "Mombrini"  
 
 Next i
 
-On Error GoTo ErrorHandler '' Ripristina la gestione degli errori generici definita per l'insieme della Macro
-    [O2].Resize(UBound(avlookup, 1), 1).Value = avResult  ''copia i risultati della ricerca verticale nell'intervallo limite inferiore cella O2
-                                                        '' e limite superiore n righe della matrice Avlookup
+'' Ripristina la gestione degli errori generici definita per l'insieme della Macro
+    On Error GoTo -1
+    On Error GoTo ErrorHandler
+    
+ '' copia i risultati della ricerca verticale nell'intervallo limite inferiore cella O2
+ '' e limite superiore n righe della matrice Avlookup                
+    [O2].Resize(UBound(avlookup, 1), 1).Value = avResult 
     
 With Range("N1")
     .Copy [O1]
@@ -250,63 +258,80 @@ With Range("N1")
     
 End With
   
-       
-    ''Arrayaris fine cerca vert su compensi collectors
+''Termine CERCA.VERT (VLOOKUP) con struttura a matrice su
+'' Cartella di lavoro compensi collectors
+```
+### ...Prosegue la Macro con Ricerca Vertical ("VLOOKUP") su 2 cartelle
+
+```vb
+
+'' Applica Cerca verticale su file bloccati settimana precedente
     
- '' cerca vert on previous file orders block
+ Dim wOb_P As Workbook ''Dichiarazione di variabile oggetto di tipo cartella
  
-     ''Arrayaris Cerca verticale file bloccati settimana precedente
-    
- Dim wOb_P As Workbook ''Defizione di variabile oggetto di tipo cartella
-   Set wOb_P = Workbooks.Open(Filename:="T:\CONTABILITA'\RECUPERO CREDITI\macraris_kl\MacrAris\Orders_Blocked_Macro\OB_P.xlsx") ''apre un cartella specifica di nome.... e
-''assegna il tutto alla variabile inizializzata cartella "wOb_P
+ '' Apre un cartella specifica di nome "OB_P.xlsx"
+ ''Assegna il tutto alla variabile inizializzata cartella "wOb_P
+   Set wOb_P = Workbooks.Open(Filename:= _
+    "T:\CONTABILITA'\RECUPERO CREDITI\macraris_kl\MacrAris\Orders_Blocked_Macro\OB_P.xlsx") 
 
-Dim shOb_P As Worksheet ''Defizione di variabile oggetto di tipo foglio
-   Set shOb_P = wOb_P.Sheets("Ordini Bloccati-clienti arancio") ''Assegna il foglio denominato .... alla variabile "shOb_P
+''Dichiarazione di variabile oggetto di tipo foglio
+Dim shOb_P As Worksheet
 
-Columns("H:H").Cut '' taglia la colonna
-    Columns("G:G").Insert Shift:=xlToRight '' inserisce la colonna h tagliata e sposta la colonna G verso destra
+''Assegna il foglio denominato "Ordini Bloccati-clienti arancio" alla variabile "shOb_P"
+   Set shOb_P = wOb_P.Sheets("Ordini Bloccati-clienti arancio")
+    Columns("H:H").Cut '' taglia la colonna
+'' inserisce la colonna h tagliata e sposta la colonna G verso destra
+    Columns("G:G").Insert Shift:=xlToRight
 
-With shOb_P  ''
-.Range(.Cells(.Range("G1").SpecialCells(xlCellTypeLastCell).Row, "G"), "G2").Select ''Seleziona l'intervallo di dati utile nella colonna G2
-End With
-         Selection.TextToColumns Destination:=Range("G2"), DataType:=xlFixedWidth, _
-        FieldInfo:=Array(0, 2), TrailingMinusNumbers:=True                             ' applica la funzionalita testo in colonne per trasformare i dati in formato testo
-        
-shOb_C.Activate ''Attiva il foglio assegnato alla variabile shOb_C
+ ''Seleziona l'intervallo di dati utili nella colonna G2
+    With shOb_P
+        .Range(.Cells(.Range("G1").SpecialCells(xlCellTypeLastCell).Row, "G"), "G2").Select
+    End With
+ '' Applica la funzionalità testo in colonne per trasformare i dati in formato testo
+ '' Utile per la funzione "CERCA.VERT" in quanto i dati che servono per la ricerca
+ '' devono essere dello stesso tipo
+       Selection.TextToColumns Destination:=Range("G2"), DataType:=xlFixedWidth, _
+            FieldInfo:=Array(0, 2), TrailingMinusNumbers:=True                             
 
-wOb_P.Sheets(Array("Finservice_Affidati", "clienti a contenz o pro concors", _
-            "privati payer")).Copy After:=shOb_C                    ' Copia fogli dalla cartella (file) settimana precedente dentro la corrente cartella
+''Attiva il foglio assegnato alla variabile shOb_C       
+shOb_C.Activate
+
+'' Copia fogli dalla cartella (file) settimana precedente dentro la corrente cartella
+'' Utilizza la struttura a matrice per copiare + fogli 
+    wOb_P.Sheets(Array("Finservice_Affidati", "clienti a contenz o pro concors", _
+            "privati payer")).Copy After:=shOb_C
  
- shOb_C.Activate   ''attiva il foglio ; vedi il foglio a cui e' stato assegnato la variabile
-
+ ''attiva il foglio ; vedi il foglio a cui e' stato assegnato la variabile
+ shOb_C.Activate
+''Nel file settimana precedente assegna l'intervallo di dati
+'' tra nelle colonne G a H alla matrice vaNameColl
 With shOb_P
-    vaNameColl = .Range(.Cells(.Range("G1").SpecialCells(xlCellTypeLastCell).Row, "G"), "H2") ''Nel file settimana precedente assegna l'intervallo di dati
-                    '' tra nelle colonne G a H alla matrice vaNameColl
+    vaNameColl = _
+    .Range(.Cells(.Range("G1").SpecialCells(xlCellTypeLastCell).Row, "G"), "H2")
 End With
 
+''disattiva le notitiche di Excel
+    Application.DisplayAlerts = False
+''chiude la cartella di lavoro settimana precedente senza salvare    
+        wOb_P.Close
+''Riattiva le notifiche di Excel
+    Application.DisplayAlerts = True
 
-Application.DisplayAlerts = False   ''disattiva le notitiche di Excel
-    wOb_P.Close     ''chiude la cartella di lavoro settimana precedente senza salvare
-Application.DisplayAlerts = True    ''Riattiva le notifiche di Excel
-
-'
-' avlookup = Range(Cells(Rows.Count, "H").End(xlUp), "H2")
-'    ReDim avResult(1 To UBound(avlookup, 1), 1 To 1)
-      
-For i = 1 To UBound(avlookup, 1)
+For i = 1 To UBound(avlookup, 1) '' Ciclo di ripetizione
     On Error Resume Next ''Ignora eventuali errori
-    
-    avResult(i, 1) = WorksheetFunction.VLookup(avlookup(i, 1), vaNameColl, 2, 0)  ''Cerca verticale sulla matrice di dati per copiare i commenti presenti
-        If Err.Number = 1004 Then avResult(i, 1) = CVErr(xlErrNA)                   ''nel file della settimana precedente. Notare prima di chiudere il file
-                                                                                    '' Tali valori sono stati assegnati alla matrice vaNameColl. Ove possibile
-                                                                                    ''preferire operazioni sulle matrici al posto delle operazioni sulle celle di Excel
-                                                                                    ''in quanto la velocita di elaborazione e' di 10+
-                                                                                    ''Quando riscontra un errore di tipo 1004 con CVErr(xlErrNA)  assegna il valore #N/D
-
+'' Cerca verticale sulla matrice di dati per copiare i commenti presenti
+'' nel file della settimana precedente. Notare che prima di chiudere il file con
+'' variabile "wOb_P" tali valori sono stati assegnati alla matrice vaNameColl.
+'' Ove possibile preferire operazioni sulle matrici al posto delle operazioni 
+'' sulle celle di Excel in quanto la velocita di elaborazione e' di 10+
+'' Quando riscontra un errore di tipo 1004 con CVErr(xlErrNA)  assegna il valore #N/D
+        avResult(i, 1) = WorksheetFunction.VLookup(avlookup(i, 1), vaNameColl, 2, 0)
+            If Err.Number = 1004 Then avResult(i, 1) = CVErr(xlErrNA)
 Next i
 
-On Error GoTo ErrorHandler  ''Ripristina la gestione di errori generici
+''Ripristina la gestione di errori generici
+On Error GoTo 0
+On Error GoTo ErrorHandler
     [G2].Resize(UBound(avlookup, 1), 1).Value = avResult   ''Restituisce i risultati della ricerca verticale dalla cella G2 in poi.
                                                             '' I risultati sono presi dalla matrice avResult
        
