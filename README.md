@@ -482,9 +482,10 @@ Interval = endtriggerChrono - triggerChrono
 
 '' Gestione di errore con rilevamento tipo di errore e descrizione
 ErrorHandler:
-MsgBox "Interruzione Macro Causa Errore in Orders_Blocked" & vbNewLine & "Contattare Macr@ris" & vbNewLine & _
-    vbCrLf & "Error number:  # " & Err.Number & vbNewLine & _
-      "Description:==> " & Err.Description, vbCritical, "Macr@ris \Error Macro"
+        MsgBox "Interruzione Macro Causa Errore in Orders_Blocked" & vbNewLine _
+            & "Contattare Macr@ris" & vbNewLine _
+            & vbCrLf & "Error number:  # " & Err.Number & vbNewLine _
+            & "Description:==> " & Err.Description, vbCritical, "Macr@ris \Error Macro"
  
 Application.ScreenUpdating = True  ''riattiva i movimenti dello schermo
 Application.DisplayAlerts = True  '' riattiva tutti i messagi di avvertimento
