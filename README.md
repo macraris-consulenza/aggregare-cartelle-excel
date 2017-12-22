@@ -44,14 +44,15 @@ If infos = vbNo Then
     End If '' Fine esecuzione Macro
 ```
 
-## ESECUZIONE PROCEDURA CREAZIONE CARTELLE ANNO SEGUENTE
+### ESECUZIONE PROCEDURA CREAZIONE CARTELLE ANNO SEGUENTE
 
 ```vb
 '' Macro nidificata in un'altra: richiama un'altra macro (codici vba in indice)
 '' Utile a fine Anno Dicembre: crea automaticamente la cartella relativa
 '' al nuovo anno di riferimento in cui salvare i file elaborati
 
-            creazioneCartelleYr1_ordersblock     
+creazioneCartelleYr1_ordersblock
+
 ```
 ### Impostazione delle diverse cartelle Excel
 
@@ -65,7 +66,7 @@ Set wOb_C = ActiveWorkbook
 '' visualizza un messaggio informativo e poi interruzione. E' utile includere la
 '' la gestione di errori prevedibili quando si sviluppa una Macro.
 
-If wOb_C.Name <> "OB_C.xlsx" Then   
+If wOb_C.Name <> "OB_C.xlsx" Then
  MsgBox "File Excel NON Corretto!" _
          & vbCrLf & vbCrLf & "verifica che file attivo sia OB_C.xlsx" _
          & vbCrLf & vbCrLf & "Interuzione Macro senza Alcuna Conseguenza!", _
@@ -80,23 +81,23 @@ Dim triggerChrono As Date, endtriggerChrono As Date, Interval As Date, strOutput
 
 '' alla Variabile triggerChrono viene assegnata l'ora al momento dell'esecuzione
 '' dell'istruzione che segue
-triggerChrono = Now  
+triggerChrono = Now
 
 ''Messaggio all'utente dell'esecuzione in corso della Macro nella barra di stato
 Application.StatusBar = "Elaborazione Dati in Corso... Goditi un pò di Relax!"
 
 '' Movimenti dello schermo possono rallentare l'esecuzione delle macro
 ''Il valore "False" disattiva i movimenti dello schermo
-Application.ScreenUpdating = False 
+Application.ScreenUpdating = False
 
 '' Ad ogni errore riscontrato durante l'esecuzione della macro la sua gestione è rinviata a
 '' "ErrorHandler" dove ci sono delle istruzioni che catturano l'errore e l'utente è informato
 '' Tramite commando "Msgbox" sul tipo di errore e la sua descrizione e cosa fare
 
-  On Error GoTo ErrorHandler 
+  On Error GoTo ErrorHandler
 
 ''auto adattamento larghezza colonna A
-  Columns("A:A").EntireColumn.AutoFit 
+  Columns("A:A").EntireColumn.AutoFit
   [b1].Value = "Valore Ordini"    '' nuovo valore della cella B1
   Range("B1").Font.Bold = True ''Applica il grassetto alla cella B1
   Columns("B:B").EntireColumn.AutoFit '' auto adattamento larghezza colonna B
@@ -143,7 +144,7 @@ Application.ScreenUpdating = False
     shOb_C.Name = "Ordini Bloccati-clienti arancio"
 ``` 
 
-## Copiare Fogli da una Cartella a un'altra in Excel VBA
+### Copiare Fogli da una Cartella a un'altra in Excel VBA
 
 ```vb
 '' Aggiunta del foglio Finservice
@@ -215,16 +216,17 @@ Application.DisplayAlerts = True
     '' avlookup = Range(Cells(Rows.Count, "H").End(xlUp), "H2")
 '' Selezione dinamica dell'intervallo di dati H2 e
 avlookup = Range(Cells(Range("H1").SpecialCells(xlCellTypeLastCell).Row - 1, "H"), "H2") 
-                                                                                            ''l'ultima cella dell'intervallo che contiene i dati.
-                                                                                            ''notare l'uso "Vai a formato speciale Ultima cella.
-                                                                                            ''identifica la riga e meno 1 per avere il numero di riga che contiene
-                                                                                            ''l'ultimo dato
-                                                                                            ''Assegna poi l'intervallo di dati selezionati alla matrice "avLookup"
- 
-    ReDim avResult(1 To UBound(avlookup, 1), 1 To 1) '' Con "ReDim" crea un intervallo di dati in matrice di n righe, 1 colonna della stessa
-                                                        '' dimensione della matrice "AvLookup"
-      
 
+''l'ultima cella dell'intervallo che contiene i dati.
+''notare l'uso "Vai a formato speciale Ultima cella.
+''identifica la riga e meno 1 per avere il numero di riga che contiene
+''l'ultimo dato
+''Assegna poi l'intervallo di dati selezionati alla matrice "avLookup"
+ 
+ '' Con "ReDim" crea un intervallo di dati in matrice di n righe, 1 colonna della stessa
+ '' dimensione della matrice "AvLookup"
+ ReDim avResult(1 To UBound(avlookup, 1), 1 To 1) 
+ 
 For i = 1 To UBound(avlookup, 1) ''ciclo di ripetizione con limite di esecuzione n esima riga della matrice avlookup
 
     On Error Resume Next   ''ignorare eventuali errori generati nell'esecuzione della macro specie quando il risultato della
