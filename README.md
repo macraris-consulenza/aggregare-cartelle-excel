@@ -1,4 +1,5 @@
 # Ordini Bloccati Macro Excel VBA
+
 Questo progetto descrive l'automazione della reportistica degli ordini bloccati nell'ambito delle attività di recupero credito di un'azienda del settore farmaceutico
 
 ``` vb
@@ -26,12 +27,11 @@ Dim infos As Variant
 '' "Msgbox" per fornire infos all'utente di ciò che succederà una volta che avra premuto su ok
 '' L'uso del "&" serve per concatenare le stringhe
 
-infos = MsgBox("Elaborazione file Ordini Bloccati..." & vbNewLine & vbNewLine & _
-    "Salvare Prima!!! ==>> CTRL-Z non funziona!" & vbNewLine & vbNewLine & _
-    "Accertarsi salvataggio File necessari nel seguente percorso." _
-    & vbCrLf & "T:\CONTABILITA'\RECUPERO CREDITI\macraris_kl\MacrAris\Orders_Blocked_Macro " _
-    & vbCrLf & vbCrLf _
-    & "Pregasi NON ALTERARE il nome dei File" _
+infos = MsgBox("Elaborazione file Ordini Bloccati..." & vbNewLine & vbNewLine _
+    & "Salvare Prima!!! ==>> CTRL-Z non funziona!" & vbNewLine & vbNewLine _
+    & "Accertarsi salvataggio File necessari nel seguente percorso." _
+    & vbCrLf & "T:\CONTABILITA'\RECUPERO CREDITI\macraris_kl\MacrAris\Orders_Blocked_Macro" _
+    & vbCrLf & vbCrLf & "Pregasi NON ALTERARE il nome dei File" _
     & vbNewLine & vbNewLine & "" & vbNewLine & "Qui per sbaglio -->  Click 'NO'", _
       vbYesNo + vbInformation + vbDefaultButton2, "Macr@ris Ordini Bloccati")
                     
@@ -39,12 +39,12 @@ infos = MsgBox("Elaborazione file Ordini Bloccati..." & vbNewLine & vbNewLine & 
 '' in caso affermativo l'esecuzione della macro si interrompe son "Exit Sub"
 '' "Exit Sub" corrisponde a esci dalla Routine
 
-If infos = vbNo Then 
-    Exit Sub '' Non esegue la macro in quanto l'utente ha lanciato la macro per errore
+    If infos = vbNo Then 
+        Exit Sub '' Non esegue la macro in quanto l'utente ha lanciato la macro per errore
     End If '' Fine esecuzione Macro
 ```
 
-### ESECUZIONE PROCEDURA CREAZIONE CARTELLE ANNO SEGUENTE
+### Esecuzione routine esterna creazione Cartelle anno successivo
 
 ```vb
 '' Macro nidificata in un'altra: richiama un'altra macro (codici vba in indice)
@@ -261,7 +261,7 @@ End With
 ''Termine CERCA.VERT (VLOOKUP) con struttura a matrice su
 '' Cartella di lavoro compensi collectors
 ```
-### ...Prosegue la Macro con Ricerca Vertical ("VLOOKUP") su 2 cartelle
+### ...Prosegue la Macro con Ricerca Verticale ("VLOOKUP") su 2 cartelle
 
 ```vb
 
