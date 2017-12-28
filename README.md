@@ -496,7 +496,7 @@ End Sub ''Istruzione di fine Esecuzione
 ```
 ## Creazione Dinamica cartelle
 
-_Questa macro richiamata dalla macro..._In
+_Questa macro richiamata dalla macro..._
 
 > verifica nel mese di dicembre che la cartella ove salvare il file di elaborazione
 > sia disponibile e in caso contrario procede alla creazione della cartella
@@ -563,7 +563,8 @@ Il controllo è esgeguito su 2 cartelle
  '' con MsgBox informa l'utente che tale cartella e' stata creata 
                 MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf & _
                 "è stata creata la cartella " & scheckFolder & vbCrLf & _
-                "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, "Macr@ris Cartella Automatica Ordini"
+                "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
+		"Macr@ris Cartella Automatica Ordini"
  '' Fine della condizione IF               
     End If
  ```
@@ -585,46 +586,46 @@ Il controllo è esgeguito su 2 cartelle
                             cryInt = Format(Now, "YYYY") & "\tabella_compensi_collectors.xlsx"
 							
  '' Condizione if di verifica se file esiste                           
-			If objFso.FileExists(scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx") = False Then
+	If objFso.FileExists(scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx") = False Then
                            
-			'' se test condizione falsa allora copia file corrente dentro la cartella anno successivo
-				FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
+'' se test condizione falsa allora copia file corrente dentro la cartella anno successivo
+	FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
 
 '' MsgBox a utente per informazione di copia di file avvenuta e quindi di aggiornamento quanto prima                       
 
-					MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
-					& "Nella cartella " & scheckFolder & vbCrLf _
-					& "Percorso:" & vbCrLf & scheckPath & vbcrLf & vbCrLf _
-					& "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & vbCrLf _
-					& "Update in base alle nuove allocazioni contrattuali clienti", vbInformation, _
-					"Macr@ris Cartella Automatica Orders"
-			'' Altrimenti se il file esiste già informare semplicemente l'utente di aggiornare tale file                    
-            Else
-				MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
-				& "Nella cartella " & scheckFolder & vbCrLf _
-				& "Percorso:" & vbCrLf & scheckPath & vbCrLf _
-				& vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" _
-				& vbCrLf & "Update in base alle nuove allocazioni contrattuali collectors", _
-				vbInformation, "Macr@ris Cartella Automatica Orders"
+	MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
+	& "Nella cartella " & scheckFolder & vbCrLf _
+	& "Percorso:" & vbCrLf & scheckPath & vbcrLf & vbCrLf _
+	& "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & vbCrLf _
+	& "Update in base alle nuove allocazioni contrattuali clienti", vbInformation, _
+	"Macr@ris Cartella Automatica Orders"
+'' Altrimenti se il file esiste già informare semplicemente l'utente di aggiornare tale file                    
+     Else
+	MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
+	& "Nella cartella " & scheckFolder & vbCrLf _
+	& "Percorso:" & vbCrLf & scheckPath & vbCrLf _
+	& vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" _
+	& vbCrLf & "Update in base alle nuove allocazioni contrattuali collectors", _
+	vbInformation, "Macr@ris Cartella Automatica Orders"
                                         
-            End If
-            
-	'' Se la cartella non esiste: creazione della cartella e copia al suo interno del file
-	'' del corrente anno 
+      End If
+'' Se la cartella non esiste: creazione della cartella e copia al suo interno del file
+'' del corrente anno 
     Else
-                objFso.CreateFolder (scheckPath & scheckFolder)
-                FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
-                
-                MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
-                & "è stata creata la cartella " & scheckFolder & vbCrLf _
-                & "Nel seguente percorso:" & vbCrLf & scheckPath & vbCrLf _
-                & vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & _
-                "salvato nella nuova cartella creata", vbInformation, "Macr@ris Cartella Automatica Orders"
+	objFso.CreateFolder (scheckPath & scheckFolder)
+	FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
+
+	MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
+	& "è stata creata la cartella " & scheckFolder & vbCrLf _
+	& "Nel seguente percorso:" & vbCrLf & scheckPath & vbCrLf _
+	& vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & _
+	"salvato nella nuova cartella creata", vbInformation, "Macr@ris Cartella Automatica Orders"
                   
     End If
-End If
+ End If
 
 End IF
+
 '' Termina qui se errore non riscontrato
 
 Exit Sub
