@@ -494,3 +494,147 @@ Application.StatusBar = ""        '' riattiva le impostazioni predefinite della 
 End Sub ''Istruzione di fine Esecuzione
 
 ```
+## Creazione Dinamica cartelle
+
+_Questa macro richiamata dalla macro..._In
+
+> verifica nel mese di dicembre che la cartella ove salvare il file di elaborazione
+> sia disponibile e in caso contrario procede alla creazione della cartella
+> e avvisa l'utente. Controllo effettuato dal 15 dicembre di ogni anno
+
+
+Il controllo è esgeguito su 2 cartelle
+1. "T:\CONTABILITA'\RECUPERO CREDITI\file ordini bloccati\
+2. "T:\CONTABILITA'\RECUPERO CREDITI\Credit_Collectors\Contratti_Credit_Collectors\"
+
+> Inoltre se il file "tabella_compensi_collectors.xlsx" non è presente viene copiato quello dell'anno
+> Precedente con avviso all'utente di aggiornare il file appena possibile
+
+```vb
+'' Sub crea la routine 
+	Sub creazioneCartelleYr1_ordersblock()
+
+'' Gestione errori
+	On Error GoTo ErrorHandler
+
+'' Verifica che il mese sia dicembre
+	If Format(Now, "mm") = "12" Then
+
+'' Dichiarazione di variabili per impostazione dell'intervallo temporale di controllo
+
+	Dim intDate As Date, checkDateInf As String, checkDatesup As String, yrInterval As String
+
+'' Data del giorno assegnata a variabile intDate
+	intDate = Date
+	
+''Formatto anno successivo in YYYY assegnato a yrInterval
+	yrInterval = Format(WorksheetFunction.EoMonth(Now(), 1), "YYYY")
+	
+'' Limite inferiore intervallo di controllo data (variabile di tipo stringa)
+	checkDateInf = "12/14/" & Format(intDate, "YYYY")
+	
+''Limite superiore intervallo di controllo data (variabile di tipo stringa)
+	checkDatesup = "12/31/" & Format(intDate, "YYYY")
+	
+''Condizione IF di verifica da data del giorno si trova nell'intervallo di controllo
+''NB- "DateValue" converte la variabile stringa in data per rendere possibile il 
+''controllo
+ If intDate > DateValue(checkDateInf) And intDate < DateValue(checkDatesup) Then
+'' Se siamo tra il 15 e 31 dicembre dell'anno allora
+
+'' Dichiarazione di un oggetto
+	Dim objFso As Object
+'' Initializzazione dell'oggetto creato
+        Set objFso = CreateObject("Scripting.FileSystemObject")
+		
+        Dim scheckPath As String, scheckFolder As String
+ '' Attribuzione percorso file alle variabili       
+        scheckPath = "T:\CONTABILITA'\RECUPERO CREDITI\file ordini bloccati\"
+
+'' Verifica esistenza cartella anno successivo
+'' Notare l'uso della variabile yrInterval pare l'anno di riferimento della cartella
+        scheckFolder = "BBMI_" & yrInterval & "_Ordini_Bloccati"
+ 
+ '' Se la cartella esiste già allora niente quindi prossima istruzione = End if  
+   If objFso.FolderExists(scheckPath & scheckFolder) Then
+            ''do Nothing
+             Else ''' altrimenti crea detta cartella
+                 objFso.CreateFolder (scheckPath & scheckFolder)		
+ '' con MsgBox informa l'utente che tale cartella e' stata creata 
+                MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf & _
+                "è stata creata la cartella " & scheckFolder & vbCrLf & _
+                "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, "Macr@ris Cartella Automatica Ordini"
+ '' Fine della condizione IF               
+    End If
+ ```
+ 
+ ### ... prosegue verifica file tabella_compensi_collectors.xlsx 
+ > Se assente nella cartella anno successivo viene copiata la cartella
+ > anno corrente nel percorso creato anno successivo
+ > _Ricordare nel msgbox va aggiornato sulla base nuova contrattazione_
+ 
+```vb
+'' Nuova assegnazione di variabile  
+  scheckPath = "T:\CONTABILITA'\RECUPERO CREDITI\Credit_Collectors\Contratti_Credit_Collectors\"
+        scheckFolder = yrInterval
+		
+'' Condizione if di verifica se cartella esiste
+    If objFso.FolderExists(scheckPath & scheckFolder) Then
+             
+              Dim cryInt As String
+                            cryInt = Format(Now, "YYYY") & "\tabella_compensi_collectors.xlsx"
+							
+ '' Condizione if di verifica se file esiste                           
+			If objFso.FileExists(scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx") = False Then
+                           
+			'' se test condizione falsa allora copia file corrente dentro la cartella anno successivo
+				FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
+
+'' MsgBox a utente per informazione di copia di file avvenuta e quindi di aggiornamento quanto prima                       
+
+					MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
+					& "Nella cartella " & scheckFolder & vbCrLf _
+					& "Percorso:" & vbCrLf & scheckPath & vbcrLf & vbCrLf _
+					& "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & vbCrLf _
+					& "Update in base alle nuove allocazioni contrattuali clienti", vbInformation, _
+					"Macr@ris Cartella Automatica Orders"
+			'' Altrimenti se il file esiste già informare semplicemente l'utente di aggiornare tale file                    
+            Else
+				MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
+				& "Nella cartella " & scheckFolder & vbCrLf _
+				& "Percorso:" & vbCrLf & scheckPath & vbCrLf _
+				& vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" _
+				& vbCrLf & "Update in base alle nuove allocazioni contrattuali collectors", _
+				vbInformation, "Macr@ris Cartella Automatica Orders"
+                                        
+            End If
+            
+	'' Se la cartella non esiste: creazione della cartella e copia al suo interno del file
+	'' del corrente anno 
+    Else
+                objFso.CreateFolder (scheckPath & scheckFolder)
+                FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
+                
+                MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
+                & "è stata creata la cartella " & scheckFolder & vbCrLf _
+                & "Nel seguente percorso:" & vbCrLf & scheckPath & vbCrLf _
+                & vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & _
+                "salvato nella nuova cartella creata", vbInformation, "Macr@ris Cartella Automatica Orders"
+                  
+    End If
+End If
+
+End IF
+'' Termina qui se errore non riscontrato
+
+Exit Sub
+
+'' in Caso di errore va qui
+ErrorHandler:
+MsgBox "Interruzione Macro causa errore in 'CreazioneCartelleYr1_ordersblock'" & "   " _
+& vbNewLine & vbCrLf & "Descrizione: - " & Error(Err) & vbCrLf _
+& "Numero Errore #-" & Err, vbOKOnly + vbExclamation, "Macr@ris Msg Errore"
+
+'' End Sub per concludere la routine
+End Sub
+```
