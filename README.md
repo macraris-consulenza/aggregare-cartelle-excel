@@ -586,7 +586,8 @@ Il controllo è esgeguito su 2 cartelle
                             cryInt = Format(Now, "YYYY") & "\tabella_compensi_collectors.xlsx"
 							
  '' Condizione if di verifica se file esiste                           
-	If objFso.FileExists(scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx") = False Then
+	If objFso.FileExists(scheckPath & scheckFolder & _
+			"\tabella_compensi_collectors.xlsx") = False Then
                            
 '' se test condizione falsa allora copia file corrente dentro la cartella anno successivo
 	FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
