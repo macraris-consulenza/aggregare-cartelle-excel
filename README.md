@@ -569,7 +569,7 @@ Il controllo è esgeguito su 2 cartelle
     End If
  ```
  
- ### ... prosegue verifica file tabella_compensi_collectors.xlsx 
+### ... prosegue verifica file tabella_compensi_collectors.xlsx 
  > Se assente nella cartella anno successivo viene copiata la cartella
  > anno corrente nel percorso creato anno successivo
  > _Ricordare nel msgbox va aggiornato sulla base nuova contrattazione_
