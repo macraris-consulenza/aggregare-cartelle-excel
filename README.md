@@ -554,7 +554,8 @@ Il controllo è esgeguito su 2 cartelle
         Dim scheckPath As String, scheckFolder As String
  '' Attribuzione percorso file alle variabili       
         scheckPath = Environ("UserProfile") & "\Desktop\Ordini_Bloccati\
-
+```
+```vb
  '' Verifica esistenza cartella anno successivo
  '' Notare l'uso della variabile yrInterval per l'anno di riferimento della cartella
 	scheckFolder = "Macraris_" & yrInterval & "_Ordini_Bloccati"
