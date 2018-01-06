@@ -555,21 +555,21 @@ Il controllo è esgeguito su 2 cartelle
  '' Attribuzione percorso file alle variabili       
         scheckPath = Environ("UserProfile") & "\Desktop\Ordini_Bloccati\
 
-'' Verifica esistenza cartella anno successivo
-'' Notare l'uso della variabile yrInterval per l'anno di riferimento della cartella
+ '' Verifica esistenza cartella anno successivo
+ '' Notare l'uso della variabile yrInterval per l'anno di riferimento della cartella
         scheckFolder = "Macraris_" & yrInterval & "_Ordini_Bloccati"
  
  '' Se la cartella esiste già allora niente quindi prossima istruzione = End if  
-If objFso.FolderExists(scheckPath & scheckFolder) Then ''quindi...
-    ''non fare niente
-	Else ''' altrimenti crea detta cartella
-	 objFso.CreateFolder (scheckPath & scheckFolder)		
-	'' con MsgBox informa l'utente che tale cartella e' stata creata 
-	MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
-	& "è stata creata la cartella " & scheckFolder & vbCrLf _
-	& "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
-	"Macr@ris Cartella Automatica Ordini"
- '' Fine della condizione IF               
+	If objFso.FolderExists(scheckPath & scheckFolder) Then ''quindi...
+		    ''non fare niente
+			Else ''' altrimenti crea detta cartella
+			 objFso.CreateFolder (scheckPath & scheckFolder)		
+			'' con MsgBox informa l'utente che tale cartella e' stata creata 
+			MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
+			& "è stata creata la cartella " & scheckFolder & vbCrLf _
+			& "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
+			"Macr@ris Cartella Automatica Ordini"
+  '' Fine della condizione IF               
 	End If
  ```
 
