@@ -560,20 +560,20 @@ Il controllo è esgeguito su 2 cartelle
         scheckFolder = "Macraris_" & yrInterval & "_Ordini_Bloccati"
  
  '' Se la cartella esiste già allora niente quindi prossima istruzione = End if  
-	If objFso.FolderExists(scheckPath & scheckFolder) Then ''quindi...
-            ''non fare niente
-		Else ''' altrimenti crea detta cartella
-					 objFso.CreateFolder (scheckPath & scheckFolder)		
-					'' con MsgBox informa l'utente che tale cartella e' stata creata 
-					MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
-					& "è stata creata la cartella " & scheckFolder & vbCrLf _
-					& "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
-					"Macr@ris Cartella Automatica Ordini"
+If objFso.FolderExists(scheckPath & scheckFolder) Then ''quindi...
+    ''non fare niente
+	Else ''' altrimenti crea detta cartella
+	 objFso.CreateFolder (scheckPath & scheckFolder)		
+	'' con MsgBox informa l'utente che tale cartella e' stata creata 
+	MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
+	& "è stata creata la cartella " & scheckFolder & vbCrLf _
+	& "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
+	"Macr@ris Cartella Automatica Ordini"
  '' Fine della condizione IF               
 	End If
  ```
- 
- ### ... prosegue verifica file collectors.xlsx 
+
+### ... prosegue verifica file collectors.xlsx 
  > Se assente nella cartella anno successivo viene copiata la cartella
  > anno corrente nel percorso creato anno successivo
  > _Ricordare nel msgbox che tale elenco va aggiornato sulla base della 
