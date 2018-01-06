@@ -4,7 +4,7 @@ Questo progetto descrive l'automazione della reportistica degli ordini bloccati 
 
 ``` vb
 
-Private Sub Orders_Blocked()
+Private Sub macro_OrdiniBloccati()
 ''----------------------------------------------------------
 '' "Private" precede "Sub" per non fare apparire la macro nell'elenco delle macro 
 '' (accessibile con la combinazione di Tasti ALT-F8 nell'interfaccia di Excel)
@@ -30,13 +30,14 @@ Dim infos As Variant
 infos = MsgBox("Elaborazione file Ordini Bloccati..." & vbNewLine & vbNewLine _
     & "Salvare Prima!!! ==>> CTRL-Z non funziona!" & vbNewLine & vbNewLine _
     & "Accertarsi salvataggio File necessari nel seguente percorso." _
-    & vbCrLf & "T:\CONTABILITA'\RECUPERO CREDITI\macraris_kl\MacrAris\Orders_Blocked_Macro" _
+    & vbCrLf _ 
+	& Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\Ordini_Bloccati_File_Lavoro" _
     & vbCrLf & vbCrLf & "Pregasi NON ALTERARE il nome dei File" _
     & vbNewLine & vbNewLine & "" & vbNewLine & "Qui per sbaglio -->  Click 'NO'", _
       vbYesNo + vbInformation + vbDefaultButton2, "Macr@ris Ordini Bloccati")
                     
 '' La seguente condizione valuta se l'utente ha cliccato su "NO" 
-'' in caso affermativo l'esecuzione della macro si interrompe son "Exit Sub"
+'' in caso affermativo l'esecuzione della macro si interrompe con "Exit Sub"
 '' "Exit Sub" corrisponde a esci dalla Routine
 
     If infos = vbNo Then 
@@ -51,7 +52,7 @@ infos = MsgBox("Elaborazione file Ordini Bloccati..." & vbNewLine & vbNewLine _
 '' Utile a fine Anno Dicembre: crea automaticamente la cartella relativa
 '' al nuovo anno di riferimento in cui salvare i file elaborati
 
-creazioneCartelleYr1_ordersblock
+verificaCartelle_Creazione
 
 ```
 ### Impostazione delle diverse cartelle Excel
@@ -141,7 +142,7 @@ Application.ScreenUpdating = False
 '' Assegna il foglio 1 alla variabile foglio dichiarata alla riga precedente
     Set shOb_C = wOb_C.Sheets(1)
 '' Rinomina il foglio rappresentato da shOb_C    
-    shOb_C.Name = "Ordini Bloccati-clienti arancio"
+    shOb_C.Name = "Ordini-Bloccati-Clienti-Arancio"
 ``` 
 
 ### Copiare Fogli da una Cartella a un'altra in Excel VBA
@@ -159,7 +160,7 @@ Dim CrSh As Worksheet '' Dichiarazione di una variabile oggetto Foglio
     For Each CrSh In Worksheets 
     ''Condizione IF da controllare per ogni ciclo
         If CrSh.Name <> shOb_C.Name Then 
-''Elimina foglio se nome non uguale a shOb_C.Name = "Ordini Bloccati-clienti arancio"
+''Elimina foglio se nome non uguale a shOb_C.Name = "Ordini-Bloccati-Clienti-Arancio"
         CrSh.Delete 
         End If '' fine esecuzione condizione
 '' "Next" riporta il codice di esecuzione a "For" per eseguire 
@@ -182,15 +183,15 @@ Dim wCompensiColl As Workbook
 ''apertura di una cartella di lavoro e sua assegnazione alla variabile
 '' tipo cartella appena creata
    Set wCompensiColl = Workbooks.Open(Filename:= _
-    "T:\CONTABILITA'\RECUPERO CREDITI\Credit_Collectors\Contratti_Credit_Collectors\" _
-      & Cy & "\tabella_compensi_collectors.xlsx")
+    Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\Collectors\" _
+      & Cy &"_Dati_Collectors" & "\collectors.xlsx")
 
 '' Dichiarazione di una variabile di tipo foglio
 Dim ShCompensiC As Worksheet
-'' Assegnazione del foglio "BBMI_PRIV_COLLECTORS" alla variabile di tipo foglio
-   Set ShCompensiC = wCompensiColl.Sheets("BBMI_Priv_Collectors") 
+'' Assegnazione del foglio "PRIV_COLLECTORS" alla variabile di tipo foglio
+   Set ShCompensiC = wCompensiColl.Sheets("Priv_Collectors") 
 
-'' attiva il foglio denominato "Ordini Bloccati-clienti arancio" tramite la variabile shOb_C
+'' attiva il foglio denominato "Ordini-Bloccati-Clienti-Arancio" tramite la variabile shOb_C
 shOb_C.Activate
 
 ''In questo blocco si difinisce la matrice virtuale in cui copiare i dati 
@@ -237,7 +238,7 @@ For i = 1 To UBound(avlookup, 1)
 avResult(i, 1) = WorksheetFunction.VLookup(avlookup(i, 1) * 1, vaNameColl, 9, 0)
 
 '' se errore di tipo 1004 allora risultato CERCA.VERT = #N/D quindi sostituisci col Nome
-    If Err.Number = 1004 Then avResult(i, 1) = "Mombrini"  
+    If Err.Number = 1004 Then avResult(i, 1) = "Macraris"  
 
 Next i
 
@@ -272,13 +273,13 @@ End With
  '' Apre un cartella specifica di nome "OB_P.xlsx"
  ''Assegna il tutto alla variabile inizializzata cartella "wOb_P
    Set wOb_P = Workbooks.Open(Filename:= _
-    "T:\CONTABILITA'\RECUPERO CREDITI\macraris_kl\MacrAris\Orders_Blocked_Macro\OB_P.xlsx") 
+    Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\Ordini_Bloccati_File_Lavoro\OB_P.xlsx") 
 
 ''Dichiarazione di variabile oggetto di tipo foglio
 Dim shOb_P As Worksheet
 
-''Assegna il foglio denominato "Ordini Bloccati-clienti arancio" alla variabile "shOb_P"
-   Set shOb_P = wOb_P.Sheets("Ordini Bloccati-clienti arancio")
+''Assegna il foglio denominato "Ordini-Bloccati-Clienti-Arancio" alla variabile "shOb_P"
+   Set shOb_P = wOb_P.Sheets("Ordini-Bloccati-Clienti-Arancio")
     Columns("H:H").Cut '' taglia la colonna
 '' inserisce la colonna h tagliata e sposta la colonna G verso destra
     Columns("G:G").Insert Shift:=xlToRight
@@ -434,13 +435,13 @@ Range("B2").End(xlDown).Value = "=sum(" & PrimaCella & ":" & lastsumCella & ")"
     Cells(Range("B1").SpecialCells(xlCellTypeLastCell).Row, "B").NumberFormat = "€ #,##0"
 
     
-Cells(1, 1).Select '' Seleziona la cella A1
+Cells(2, 1).Select '' Seleziona la cella A1
 
 Dim stAttachment As String '' Dichiarazione Variabile stringa
 Dim StPath As String
 
 ''Assegnato il percorso ove salvare il file a Stpath
-    StPath = "T:\CONTABILITA'\RECUPERO CREDITI\file ordini bloccati\BBMI_" _
+    StPath = Environ("UserProfile") & "\Desktop\Ordini_Bloccati\Macraris_" _
                             & Cy & "_Ordini_Bloccati\"
 
 ''Dichiarazione della variabile per il nome file                            
@@ -482,10 +483,10 @@ Interval = endtriggerChrono - triggerChrono
 
 '' Gestione di errore con rilevamento tipo di errore e descrizione
 ErrorHandler:
-        MsgBox "Interruzione Macro Causa Errore in Orders_Blocked" & vbNewLine _
+        MsgBox "Interruzione Macro Causa Errore in macro_OrdiniBloccati" & vbNewLine _
             & "Contattare Macr@ris" & vbNewLine _
             & vbCrLf & "Error number:  # " & Err.Number & vbNewLine _
-            & "Description:==> " & Err.Description, vbCritical, "Macr@ris \Error Macro"
+            & "Description:==> " & Err.Description, vbCritical, "Macr@ris \Errore Macro"
  
 Application.ScreenUpdating = True  ''riattiva i movimenti dello schermo
 Application.DisplayAlerts = True  '' riattiva tutti i messagi di avvertimento
@@ -494,9 +495,12 @@ Application.StatusBar = ""        '' riattiva le impostazioni predefinite della 
 End Sub ''Istruzione di fine Esecuzione
 
 ```
-## Creazione Dinamica cartelle
 
-_Questa macro richiamata dalla macro..._
+''-+-----------------------------------------------------------------
+''-+-----------------------------------------------------------------
+## Creazione Dinamica cartelle e File "sub routine"
+
+_Questa macro richiamata Nella macro generale OrdiniBloccati..._
 
 > verifica nel mese di dicembre che la cartella ove salvare il file di elaborazione
 > sia disponibile e in caso contrario procede alla creazione della cartella
@@ -504,15 +508,15 @@ _Questa macro richiamata dalla macro..._
 
 
 Il controllo è esgeguito su 2 cartelle
-1. "T:\CONTABILITA'\RECUPERO CREDITI\file ordini bloccati\
-2. "T:\CONTABILITA'\RECUPERO CREDITI\Credit_Collectors\Contratti_Credit_Collectors\"
+1. Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\
+2. Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\" & ANNO & "Dati_Collectors"
 
-> Inoltre se il file "tabella_compensi_collectors.xlsx" non è presente viene copiato quello dell'anno
+> Inoltre se il file "collectors.xlsx" non è presente viene copiato quello dell'anno
 > Precedente con avviso all'utente di aggiornare il file appena possibile
 
 ```vb
 '' Sub crea la routine 
-	Sub creazioneCartelleYr1_ordersblock()
+	Sub verificaCartelle_Creazione()
 
 '' Gestione errori
 	On Error GoTo ErrorHandler
@@ -549,63 +553,66 @@ Il controllo è esgeguito su 2 cartelle
 		
         Dim scheckPath As String, scheckFolder As String
  '' Attribuzione percorso file alle variabili       
-        scheckPath = "T:\CONTABILITA'\RECUPERO CREDITI\file ordini bloccati\"
+        scheckPath = Environ("UserProfile") & "\Desktop\Ordini_Bloccati\
 
 '' Verifica esistenza cartella anno successivo
-'' Notare l'uso della variabile yrInterval pare l'anno di riferimento della cartella
-        scheckFolder = "BBMI_" & yrInterval & "_Ordini_Bloccati"
+'' Notare l'uso della variabile yrInterval per l'anno di riferimento della cartella
+        scheckFolder = "Macraris_" & yrInterval & "_Ordini_Bloccati"
  
  '' Se la cartella esiste già allora niente quindi prossima istruzione = End if  
-   If objFso.FolderExists(scheckPath & scheckFolder) Then
-            ''do Nothing
-             Else ''' altrimenti crea detta cartella
-                 objFso.CreateFolder (scheckPath & scheckFolder)		
- '' con MsgBox informa l'utente che tale cartella e' stata creata 
-                MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf & _
-                "è stata creata la cartella " & scheckFolder & vbCrLf & _
-                "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
-		"Macr@ris Cartella Automatica Ordini"
+	If objFso.FolderExists(scheckPath & scheckFolder) Then ''quindi...
+            ''non fare niente
+		Else ''' altrimenti crea detta cartella
+					 objFso.CreateFolder (scheckPath & scheckFolder)		
+					'' con MsgBox informa l'utente che tale cartella e' stata creata 
+					MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
+					& "è stata creata la cartella " & scheckFolder & vbCrLf _
+					& "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
+					"Macr@ris Cartella Automatica Ordini"
  '' Fine della condizione IF               
-    End If
+	End If
  ```
  
-### ... prosegue verifica file tabella_compensi_collectors.xlsx 
+ ### ... prosegue verifica file collectors.xlsx 
  > Se assente nella cartella anno successivo viene copiata la cartella
  > anno corrente nel percorso creato anno successivo
- > _Ricordare nel msgbox va aggiornato sulla base nuova contrattazione_
+ > _Ricordare nel msgbox che tale elenco va aggiornato sulla base della 
+ > nuova contrattazione
  
 ```vb
 '' Nuova assegnazione di variabile  
-  scheckPath = "T:\CONTABILITA'\RECUPERO CREDITI\Credit_Collectors\Contratti_Credit_Collectors\"
-        scheckFolder = yrInterval
+  scheckPath = Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\Collectors\"
+        scheckFolder = yrInterval & "_Dati_Collectors"
 		
 '' Condizione if di verifica se cartella esiste
     If objFso.FolderExists(scheckPath & scheckFolder) Then
              
-              Dim cryInt As String
-                            cryInt = Format(Now, "YYYY") & "\tabella_compensi_collectors.xlsx"
+    Dim cryInt As String
+        cryInt = Format(Now, "YYYY") & "_Dati_Collectors" & "\collectors.xlsx"
 							
  '' Condizione if di verifica se file esiste                           
-	If objFso.FileExists(scheckPath & scheckFolder & _
-			"\tabella_compensi_collectors.xlsx") = False Then
+	If objFso.FileExists(scheckPath & scheckFolder _
+			& "\collectors.xlsx") = False Then
                            
 '' se test condizione falsa allora copia file corrente dentro la cartella anno successivo
-	FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
+''			=Cartella Fonte & file	=Cartella destinazione & file incolla
+	FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\collectors.xlsx"
 
-'' MsgBox a utente per informazione di copia di file avvenuta e quindi di aggiornamento quanto prima                       
+'' MsgBox a utente per informazione di copia di file avvenuta e quindi di aggiornamento quanto prima 
+'' dello stesso                      
 
 	MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
 	& "Nella cartella " & scheckFolder & vbCrLf _
 	& "Percorso:" & vbCrLf & scheckPath & vbcrLf & vbCrLf _
-	& "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & vbCrLf _
-	& "Update in base alle nuove allocazioni contrattuali clienti", vbInformation, _
-	"Macr@ris Cartella Automatica Orders"
+	& "Ricordarsi di aggiornare il file 'collectors.xlsx'" & vbCrLf _
+	& "aggiornamento fatto in base ai nuovi accordi contrattuali", vbInformation, _
+	"Macr@ris Verifica esitenza cartella"
 '' Altrimenti se il file esiste già informare semplicemente l'utente di aggiornare tale file                    
      Else
 	MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
 	& "Nella cartella " & scheckFolder & vbCrLf _
 	& "Percorso:" & vbCrLf & scheckPath & vbCrLf _
-	& vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" _
+	& vbCrLf & "Ricordarsi di aggiornare il file 'collectors.xlsx'" _
 	& vbCrLf & "Update in base alle nuove allocazioni contrattuali collectors", _
 	vbInformation, "Macr@ris Cartella Automatica Orders"
                                         
@@ -614,13 +621,13 @@ Il controllo è esgeguito su 2 cartelle
 '' del corrente anno 
     Else
 	objFso.CreateFolder (scheckPath & scheckFolder)
-	FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\tabella_compensi_collectors.xlsx"
+	FileCopy scheckPath & cryInt , scheckPath & scheckFolder & "\collectors.xlsx"
 
 	MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
 	& "è stata creata la cartella " & scheckFolder & vbCrLf _
 	& "Nel seguente percorso:" & vbCrLf & scheckPath & vbCrLf _
-	& vbCrLf & "Ricordarsi di aggiornare il file 'tabella_compensi_collectors.xlsx'" & _
-	"salvato nella nuova cartella creata", vbInformation, "Macr@ris Cartella Automatica Orders"
+	& vbCrLf & "Ricordarsi di aggiornare il file 'collectors.xlsx'" & _
+	"salvato nella nuova cartella creata", vbInformation, "Macr@ris Cartella Automatica Ordini"
                   
     End If
  End If
@@ -631,9 +638,9 @@ End IF
 
 Exit Sub
 
-'' in Caso di errore va qui
+'' in Caso di errore le seguenti istruzioni sono eseguite
 ErrorHandler:
-MsgBox "Interruzione Macro causa errore in 'CreazioneCartelleYr1_ordersblock'" & "   " _
+MsgBox "Interruzione Macro causa errore in 'verificaCartelle_Creazione'" & "   " _
 & vbNewLine & vbCrLf & "Descrizione: - " & Error(Err) & vbCrLf _
 & "Numero Errore #-" & Err, vbOKOnly + vbExclamation, "Macr@ris Msg Errore"
 
