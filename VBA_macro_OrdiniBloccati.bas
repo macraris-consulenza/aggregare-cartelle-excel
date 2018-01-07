@@ -2,7 +2,7 @@ Attribute VB_Name = "FULL_macro_OrdiniBloccati"
 
 '# Ordini Bloccati Macro Excel VBA
 '
-'Questo progetto descrive l'automazione della reportistica degli ordini bloccati nell'ambito delle attivit‡ di recupero credito di un'azienda del settore farmaceutico
+'Questo progetto descrive l'automazione della reportistica degli ordini bloccati nell'ambito delle attivit√† di recupero credito di un'azienda del settore farmaceutico
 '
 '``` vb
 Private Sub macro_OrdiniBloccati()
@@ -14,18 +14,18 @@ Private Sub macro_OrdiniBloccati()
 '' Notare che la struttura dei fogli deve rimanere la stessa!
 ''----------------------------------------------------------
 '' NB "Apostrofo" corrisponde a Commenti quindi Visual Basic ignora
-'' † † "Spazio + Trattino basso _ " serve in un'istruzione per continuare su
-'' † † una nuova riga quando l'istruzione supera lo schermo
+'' ¬† ¬† "Spazio + Trattino basso _ " serve in un'istruzione per continuare su
+'' ¬† ¬† una nuova riga quando l'istruzione supera lo schermo
 ''
 
 ''Aprire il file  OB_C.xlsx prima di avviare la Macro!!!
 
-'' Dichiarazione della variabile "infos" a cui verr‡ assegnata la scelta dell'utente
+'' Dichiarazione della variabile "infos" a cui verr√† assegnata la scelta dell'utente
 '' se eseguire o no la Macro: Utile nel caso viene premuto inavertitamente
 
 Dim infos As Variant
 
-'' "Msgbox" per fornire infos all'utente di ciÚ che succeder‡ una volta che avra premuto su ok
+'' "Msgbox" per fornire infos all'utente di ci√≤ che succeder√† una volta che avra premuto su ok
 '' L'uso del "&" serve per concatenare le stringhe
 
 infos = MsgBox("Elaborazione file Ordini Bloccati..." & vbNewLine & vbNewLine _
@@ -64,7 +64,7 @@ Dim wOb_C As Workbook
 ''Assegna ed inizializza la cartella attiva alla variabile wOb_C
 Set wOb_C = ActiveWorkbook
 
-''controlla che il file attivo Ë effettivamente quello di interesse e se negativo
+''controlla che il file attivo √® effettivamente quello di interesse e se negativo
 '' visualizza un messaggio informativo e poi interruzione. E' utile includere la
 '' la gestione di errori prevedibili quando si sviluppa una Macro.
 
@@ -86,14 +86,14 @@ Dim triggerChrono As Date, endtriggerChrono As Date, Interval As Date, strOutput
 triggerChrono = Now
 
 ''Messaggio all'utente dell'esecuzione in corso della Macro nella barra di stato
-Application.StatusBar = "Elaborazione Dati in Corso... Goditi un pÚ di Relax!"
+Application.StatusBar = "Elaborazione Dati in Corso... Goditi un p√≤ di Relax!"
 
 '' Movimenti dello schermo possono rallentare l'esecuzione delle macro
 ''Il valore "False" disattiva i movimenti dello schermo
 Application.ScreenUpdating = False
 
-'' Ad ogni errore riscontrato durante l'esecuzione della macro la sua gestione Ë rinviata a
-'' "ErrorHandler" dove ci sono delle istruzioni che catturano l'errore e l'utente Ë informato
+'' Ad ogni errore riscontrato durante l'esecuzione della macro la sua gestione √® rinviata a
+'' "ErrorHandler" dove ci sono delle istruzioni che catturano l'errore e l'utente √® informato
 '' Tramite commando "Msgbox" sul tipo di errore e la sua descrizione e cosa fare
 
   On Error GoTo ErrorHandler
@@ -165,14 +165,14 @@ Dim CrSh As Worksheet '' Dichiarazione di una variabile oggetto Foglio
         CrSh.Delete
         End If '' fine esecuzione condizione
 '' "Next" riporta il codice di esecuzione a "For" per eseguire
-'' gruppo di codici IF...End IF sul foglio successivo † † † †
+'' gruppo di codici IF...End IF sul foglio successivo ¬† ¬† ¬† ¬†
     Next
 
 '' Riattiva i messaggi di avvertimento a seguito eliminazione oggetto
     Application.DisplayAlerts = True
     
 '' Matrice Aris Cerca verticale su file compensi collectors
-'' La struttura matriciale Ë molto pi˘ veloce che lavorare sui
+'' La struttura matriciale √® molto pi√π veloce che lavorare sui
 '' file Excel
 
  Dim Cy As String
@@ -197,7 +197,7 @@ shOb_C.Activate
 
 ''In questo blocco si difinisce la matrice virtuale in cui copiare i dati
 '' per eseguire  la ricerca verticale. la creazione di una matrice virtuale
-'' rende parecchio pi˘ veloce l'elaborazione dei dati
+'' rende parecchio pi√π veloce l'elaborazione dei dati
 
 Dim vAIndexCliente As Variant, vaNameColl As Variant
 Dim avlookup As Variant
@@ -289,7 +289,7 @@ Dim shOb_P As Worksheet
     With shOb_P
         .Range(.Cells(.Range("G1").SpecialCells(xlCellTypeLastCell).Row, "G"), "G2").Select
     End With
- '' Applica la funzionalit‡ testo in colonne per trasformare i dati in formato testo
+ '' Applica la funzionalit√† testo in colonne per trasformare i dati in formato testo
  '' Utile per la funzione "CERCA.VERT" in quanto i dati che servono per la ricerca
  '' devono essere dello stesso tipo
        Selection.TextToColumns Destination:=Range("G2"), DataType:=xlFixedWidth, _
@@ -357,8 +357,8 @@ On Error GoTo ErrorHandler
 ''Sub LoopTroughOrdersBlocked() ' sviluppato iniazialmente a parte!
 '' Per il buon funzionamento di questa macro, la colonna numero 8 deve essere ordinata in modo
 '' crescente. La macro esamina e seleziona i duplicati nella colonna 8 e quindi nella colonna
-'' corrispondente alla selezione fa un UNISCI CELLE quindi lo scopo Ë unire e centrare tutte le
-'' celle in corrispondenza di pi˘ posizioni dello stesso cliente nella colonna "Azioni/Commenti"
+'' corrispondente alla selezione fa un UNISCI CELLE quindi lo scopo √® unire e centrare tutte le
+'' celle in corrispondenza di pi√π posizioni dello stesso cliente nella colonna "Azioni/Commenti"
 
 Cells(2, 8).Activate  ''Seleziona la cella riga 2 colonna 8
 
@@ -419,7 +419,7 @@ Loop
 Dim PrimaCella, lastsumCella As String ''Dichiarazione di due variabili di tipo stringa
 
 '' Assegnazione della stringa B2 alla variabile prima cella;
-'' servir‡ per indirizzo di cella nella formula
+'' servir√† per indirizzo di cella nella formula
 PrimaCella = "B2"
 
 '' Con la funzione "OFFSET" e "ADDRESS" si rileva l'indirizzo
@@ -433,7 +433,7 @@ Range("B2").End(xlDown).Value = "=sum(" & PrimaCella & ":" & lastsumCella & ")"
     Range(Cells(Range("B1").SpecialCells(xlCellTypeLastCell). _
         Row - 1, "B"), "B2").NumberFormat = "#,##0.00_);(#,##0.00)"
 '' Applica formato numero con Euro
-    Cells(Range("B1").SpecialCells(xlCellTypeLastCell).Row, "B").NumberFormat = "Ä #,##0"
+    Cells(Range("B1").SpecialCells(xlCellTypeLastCell).Row, "B").NumberFormat = "¬Ä #,##0"
 
     
 Cells(2, 1).Select '' Seleziona la cella A1
@@ -509,11 +509,11 @@ End Sub ''Istruzione di fine Esecuzione
 '> e avvisa l'utente. Controllo effettuato dal 15 dicembre di ogni anno
 '
 '
-'Il controllo Ë esgeguito su 2 cartelle
+'Il controllo √® esgeguito su 2 cartelle
 '1. Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\
 '2. Environ("UserProfile") & "\Desktop\macro_Ordini_Bloccati\" & ANNO & "Dati_Collectors"
 '
-'> Inoltre se il file "collectors.xlsx" non Ë presente viene copiato quello dell'anno
+'> Inoltre se il file "collectors.xlsx" non √® presente viene copiato quello dell'anno
 '> Precedente con avviso all'utente di aggiornare il file appena possibile
 '
 '```vb
@@ -562,14 +562,14 @@ End Sub ''Istruzione di fine Esecuzione
 ''' Notare l'uso della variabile yrInterval per l'anno di riferimento della cartella
         scheckFolder = "Macraris_" & yrInterval & "_Ordini_Bloccati"
  
-''' Se la cartella esiste gi‡ allora niente quindi prossima istruzione = End if
+''' Se la cartella esiste gi√† allora niente quindi prossima istruzione = End if
     If objFso.FolderExists(scheckPath & scheckFolder) Then ''quindi...
             '' non fare niente
         Else '' altrimenti crea detta cartella
                      objFso.CreateFolder (scheckPath & scheckFolder)
                     '' con MsgBox informa l'utente che tale cartella e' stata creata
                     MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
-                    & "Ë stata creata la cartella " & scheckFolder & vbCrLf _
+                    & "√® stata creata la cartella " & scheckFolder & vbCrLf _
                     & "Nel seguente percorso:" & vbCrLf & scheckPath, vbInformation, _
                     "Macr@ris Cartella Automatica Ordini"
  ''' Fine della condizione IF
@@ -610,7 +610,7 @@ End Sub ''Istruzione di fine Esecuzione
     & "Ricordarsi di aggiornare il file 'collectors.xlsx'" & vbCrLf _
     & "aggiornamento fatto in base ai nuovi accordi contrattuali", vbInformation, _
     "Macr@ris Verifica esitenza cartella"
-''' Altrimenti se il file esiste gi‡ informare semplicemente l'utente di aggiornare tale file
+''' Altrimenti se il file esiste gi√† informare semplicemente l'utente di aggiornare tale file
      Else
     MsgBox "AVVISO di Verifica File!!!" & vbCrLf & vbCrLf _
     & "Nella cartella " & scheckFolder & vbCrLf _
@@ -627,7 +627,7 @@ End Sub ''Istruzione di fine Esecuzione
     FileCopy scheckPath & cryInt, scheckPath & scheckFolder & "\collectors.xlsx"
 
     MsgBox "AVVISO Creazione Cartella Prox Anno!!!" & vbCrLf & vbCrLf _
-    & "Ë stata creata la cartella " & scheckFolder & vbCrLf _
+    & "√® stata creata la cartella " & scheckFolder & vbCrLf _
     & "Nel seguente percorso:" & vbCrLf & scheckPath & vbCrLf _
     & vbCrLf & "Ricordarsi di aggiornare il file 'collectors.xlsx'" & _
     "salvato nella nuova cartella creata", vbInformation, "Macr@ris Cartella Automatica Ordini"
