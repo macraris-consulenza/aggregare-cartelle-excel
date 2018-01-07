@@ -518,7 +518,7 @@ End Sub ''Istruzione di fine Esecuzione
 '
 '```vb
 '''Sub crea la routine
-    Sub verificaCartelle_Creazione()
+ Private Sub verificaCartelle_Creazione()
 
 '''Gestione errori
     On Error GoTo ErrorHandler
