@@ -40,8 +40,6 @@ Alla fine della settimana (solitamente il venerdì0, estraggo un elenco da SAP c
 
 La configurazione può essere simile a questa figura di seguito illustrata
 
-[[https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_SAP_transazione_VKM1.PNG|alt=Esempio Transazione SAP VKM1]]
-
 ![image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_SAP_transazione_VKM1.PNG)
 
 ### Il processo di implementazione in VBA prevede i seguenti passaggi:
@@ -49,8 +47,8 @@ La configurazione può essere simile a questa figura di seguito illustrata
 1. Estrarre da SAP in un file Excel un elenco dei clienti bloccati e salvare nell'apposita cartella sovrascrivendo quella esistente.
 Il file più recente sarà sempre denominato `OB_C.xlsx` mentre il prospetto della settimana precedente, che servirà per integrare dati nel nuovo prospetto, sarà denominato `OB_P.xlsx`.
 
-[[https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_CartellaLavoro.PNG|alt=Cartella di lavoro]]
- 
+![image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_CartellaLavoro.PNG)
+
 > Riporto qui di seguito i codici con commento delle relative azioni
 > Vedasi File  **Readme** di questo progetto VBA Excel Ordini Bloccati
 
