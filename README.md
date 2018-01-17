@@ -57,12 +57,12 @@ Il file più recente sarà sempre denominato `OB_C.xlsx` mentre il prospetto del
 # Complimenti!
 
 ## Scaricare cartella compressa di lavoro _Progetto_VBA_Ordini_Bloccati.zip _
-1.Scarica Cartella di lavoro 
-1.Estrarre cartella scaricata sul proprio Desktop
-1.Aprire Excel, poi Visual basic editor `ALT F11`, importare il file _ _ in file **Personal.xlsb**
-1.seguire quindi le indicazioni descritte di seguito
-1.utilizzare la `F8` per eseguire il codice un'istruzione alla volta e vedere man mano il risultato in Excel
-	1.Una volta confidente `F5` per eseguire tutta la macro
+1. Scarica Cartella di lavoro 
+1. Estrarre cartella scaricata sul proprio Desktop
+1. Aprire Excel, poi Visual basic editor `ALT F11`, importare il file _ _ in file **Personal.xlsb**
+1. Seguire quindi le indicazioni descritte di seguito
+1. Utilizzare la `F8` per eseguire il codice un'istruzione alla volta e vedere man mano il risultato in Excel
+	1. Una volta confidente `F5` per eseguire tutta la macro
 	
 # QUI DI SEGUITO COMMENTO DI TUTTE LE ISTRUZIONI
 
