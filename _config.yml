@@ -1,6 +1,6 @@
 theme: jekyll-theme-cayman
-title: [Progetto Ordini Bloccati Excel VBA]
-description: [Questo progetto descrive l'automazione della reportistica degli ordini bloccati in un'azienda farmaceutica]
+title: Progetto Ordini Bloccati Excel VBA
+description: Questo progetto descrive l'automazione della reportistica degli ordini bloccati in un'azienda farmaceutica.
 show_downloads:True
 github:
   zip_url: https://drive.google.com/open?id=0B9uDK1swnaWXeHpCWUFkbVUxS0RJUVloSEdzdWowc1lRdkpB
