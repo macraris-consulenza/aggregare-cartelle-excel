@@ -1,9 +1,9 @@
-# Ordini Bloccati Macro Excel VBA
+# Benvenuti nel Progetto Excel VBA
+
+## Macro Ordini Bloccati
 
 Questo progetto descrive l'automazione della reportistica degli ordini bloccati nell'ambito delle attività di recupero credito di un'azienda del settore farmaceutico
 
-
-# Benvenuti nel Progetto Excel VBA Wiki
 ***
 > ## Gestione Ordini Bloccati
 ***
