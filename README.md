@@ -2,6 +2,70 @@
 
 Questo progetto descrive l'automazione della reportistica degli ordini bloccati nell'ambito delle attività di recupero credito di un'azienda del settore farmaceutico
 
+
+# Benvenuti nel Progetto Excel VBA Wiki
+***
+> ## Gestione Ordini Bloccati
+***
+> La gestione degli ordini nel processo di recupero crediti contribuisce all’obiettivo di minimizzazione di eventuali 
+> effetti negativi legati al rischio di ritardato pagamento oppure di insolvenza.
+> [Riferimento](https://goo.gl/iPfxKP)
+
+Questo articolo guida nell’implementazione di un prospetto di segnalazione settimanale dei clienti con relativi ordini in blocco. Il focus è posto sull’automazione con VBA Excel ovvero l’elaborazione con una procedura automatica dei dati e la successiva comunicazione via mail alle varie funzioni aziendali (_Quest'ultima sarà oggetto di un'altra documentazione Wiki_).
+
+Inizialmente illustro  l’operatività manuale e poi, passo dopo passo, entro nel merito dell’automazione con le macro VBA.
+
+In questo contesto uso **SAP R3 Transazione VKM1**, con la quale vengono visualizzati tutti gli ordini da analizzare. 
+Alla fine della settimana (solitamente il venerdì0, estraggo un elenco da SAP che ha una configurazione predefinita di colonne. La configurazione dovrà rimanere la stessa ai fini dell'automazione. 
+
+***
+> L’utente abituale del sistema SAP R3 sa come salvare una variante di visualizzazione che può essere richiamata per aver sempre gli attributi (colonne) e il loro ordinamento personalizzato.
+***
+## Il lavoro si articola come segue:
+
+1. Estrazione del file e salvataggio in un'apposita cartella
+1. Formattazione del file (rimozione e aggiunta di colonne, riorganizzazione degli elementi presenti)
+1. Integrazione con il precedente prospetto settimanale; utilizzo della funzione _**CERCA.VERT**_  per recuperare i 
+   commenti fatti sui clienti già bloccati della settimana precedente; copia nel nuovo prospetto di altri eventuali fogli 
+   di lavoro; apertura e chiusura di altri file che serviranno a recuperare, sempre tramite _Funzione **CERCA.VERT** 
+   oppure **INDICE**_, informazioni utili per l’elaborazione del prospetto. _L’utente che non ha dimestichezza con questa 
+   formula può accedere all’aiuto in Excel e digitare nella casella di ricerca CERCA.VERT._
+1. Integrazione di commenti per clienti che si presentano per la prima volta
+1. Utilizzo della funzionalità Unisci e allinea del Menu HOME gruppo Allineamento
+1. Invio di una mail con il prospetto _"Ordini bloccati"_ a tutte le funzioni aziendali interessate dallo stato di blocco di un cliente (Servizio vendita, Servizio clienti ecc.):
+   1. Elaborazione (automatica) di una `Tabella Pivot` che riassume per ogni cliente il valore complessivo degli ordini bloccati in ordine di _Importo Decrescente_ 
+   1. La macro allega il file Excel nella creazione della mail
+1. Invio di una mail personalizzata a ogni agente di recupero Credito sul territorio. Ogni agente riceve esclusivamente i clienti delle zone a lui assegnate.
+    *	La macro utilizza filtri, cicli e matrici per creare delle mail personalizzate
+
+La configurazione può essere simile a questa figura di seguito illustrata
+
+[[https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_SAP_transazione_VKM1.PNG|alt=Esempio Transazione SAP VKM1]]
+
+### Il processo di implementazione in VBA prevede i seguenti passaggi:
+ 
+1. Estrarre da SAP in un file Excel un elenco dei clienti bloccati e salvare nell'apposita cartella sovrascrivendo quella esistente.
+Il file più recente sarà sempre denominato `OB_C.xlsx` mentre il prospetto della settimana precedente, che servirà per integrare dati nel nuovo prospetto, sarà denominato `OB_P.xlsx`.
+
+[[https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_CartellaLavoro.PNG|alt=Cartella di lavoro]]
+ 
+> Riporto qui di seguito i codici con commento delle relative azioni
+> Vedasi File  **Readme** di questo progetto VBA Excel Ordini Bloccati
+
+2. Una volta salvato il file, l’utente apre il file `OB_C.xlsx` ed esegue la macro.
+
+# Complimenti!
+
+## Scaricare cartella compressa di lavoro _Progetto_VBA_Ordini_Bloccati.zip _
+1.Scarica Cartella di lavoro 
+1.Estrarre cartella scaricata sul proprio Desktop
+1.Aprire Excel, poi Visual basic editor `ALT F11`, importare il file _ _ in file **Personal.xlsb**
+1.seguire quindi le indicazioni descritte di seguito
+1.utilizzare la `F8` per eseguire il codice un'istruzione alla volta e vedere man mano il risultato in Excel
+	1.Una volta confidente `F5` per eseguire tutta la macro
+	
+# QUI DI SEGUITO COMMENTO DI TUTTE LE ISTRUZIONI
+
 ``` vb
 
 Private Sub macro_OrdiniBloccati()
