@@ -42,7 +42,7 @@ La configurazione può essere simile a questa figura di seguito illustrata
 
 [[https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_SAP_transazione_VKM1.PNG|alt=Esempio Transazione SAP VKM1]]
 
-[image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_SAP_transazione_VKM1.PNG)
+![image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_SAP_transazione_VKM1.PNG)
 
 ### Il processo di implementazione in VBA prevede i seguenti passaggi:
  
