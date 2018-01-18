@@ -51,15 +51,15 @@ Il file più recente sarà sempre denominato `OB_C.xlsx` mentre il prospetto del
 ![image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_CartellaLavoro.PNG)
 ### Complimenti!
 
-# Installazione e Esecuzione del progetto
-1. Scaricare [qui il Zip ] (https://drive.google.com/open?id=1HVOjT6WjJBf_eRfKFCFI6YrDeXwUOoBG) del progetto
-1. Decomprimere la cartella  `Progetto_VBA_Ordini_Bloccati.zip` sul Desktop
+# Installazione e Esecuzione
+1. Scaricare [qui il Zip ](https://drive.google.com/open?id=1HVOjT6WjJBf_eRfKFCFI6YrDeXwUOoBG) del progetto
+1. Decomprimere la cartella `Progetto_VBA_Ordini_Bloccati.zip` sul Desktop
 1.  Aprire la cartella decompressa e seguire le `istruzioni  nel file leggimi.txt`
 	
-# Commento Codici VBA del Progetto
+# Commento Codici VBA
 
-> Riporto qui di seguito i codici con commento dettagliato delle relative azioni
-> Vedasi File  **leggimi.txt** nel [_Download.zip_](https://drive.google.com/open?id=1HVOjT6WjJBf_eRfKFCFI6YrDeXwUOoBG)
+> Riporto qui di seguito i codici con commenti dettagliati delle relative azioni.
+> Vedasi File  **leggimi.txt** nel [_Download.zip_](https://drive.google.com/open?id=1HVOjT6WjJBf_eRfKFCFI6YrDeXwUOoBG).
 
 ``` vb
 
