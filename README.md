@@ -46,25 +46,20 @@ La configurazione può essere simile a questa figura di seguito illustrata
  
 1. Estrarre da SAP in un file Excel un elenco dei clienti bloccati e salvare nell'apposita cartella sovrascrivendo quella esistente.
 Il file più recente sarà sempre denominato `OB_C.xlsx` mentre il prospetto della settimana precedente, che servirà per integrare dati nel nuovo prospetto, sarà denominato `OB_P.xlsx`.
+1. Una volta salvato il file, l’utente apre il file `OB_C.xlsx` ed esegue la macro.
 
 ![image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_CartellaLavoro.PNG)
+### Complimenti!
 
-> Riporto qui di seguito i codici con commento delle relative azioni
-> Vedasi File  **Readme** di questo progetto VBA Excel Ordini Bloccati
-
-2. Una volta salvato il file, l’utente apre il file `OB_C.xlsx` ed esegue la macro.
-
-# Complimenti!
-
-## Scaricare cartella compressa di lavoro _Progetto_VBA_Ordini_Bloccati.zip _
-1. Scarica Cartella di lavoro 
-1. Estrarre cartella scaricata sul proprio Desktop
-1. Aprire Excel, poi Visual basic editor `ALT F11`, importare il file _ _ in file **Personal.xlsb**
-1. Seguire quindi le indicazioni descritte di seguito
-1. Utilizzare la `F8` per eseguire il codice un'istruzione alla volta e vedere man mano il risultato in Excel
-	1. Una volta confidente `F5` per eseguire tutta la macro
+# Installazione e Esecuzione del progetto
+1. Scaricare [qui il Zip ] (https://drive.google.com/open?id=1HVOjT6WjJBf_eRfKFCFI6YrDeXwUOoBG) del progetto
+1. Decomprimere la cartella  `Progetto_VBA_Ordini_Bloccati.zip` sul Desktop
+1.  Aprire la cartella decompressa e seguire le `istruzioni  nel file leggimi.txt`
 	
-# QUI DI SEGUITO COMMENTO DI TUTTE LE ISTRUZIONI
+# Commento Codici VBA del Progetto
+
+> Riporto qui di seguito i codici con commento dettagliato delle relative azioni
+> Vedasi File  **leggimi.txt** nel [_Download.zip_](https://drive.google.com/open?id=1HVOjT6WjJBf_eRfKFCFI6YrDeXwUOoBG)
 
 ``` vb
 
