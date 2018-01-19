@@ -38,18 +38,17 @@ Alla fine della settimana (solitamente il venerdì0, estraggo un elenco da SAP c
 1. Invio di una mail personalizzata a ogni agente di recupero Credito sul territorio. Ogni agente riceve esclusivamente i clienti delle zone a lui assegnate.
     *	La macro utilizza filtri, cicli e matrici per creare delle mail personalizzate
 
-La configurazione può essere simile a questa figura di seguito illustrata
+La configurazione SAP può essere simile alla figura di seguito illustrata
 
-![image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_SAP_transazione_VKM1.PNG)
+<img src="http://drive.google.com/uc?export=view&id=1te-zUVomaguC-NgE7LPm-G5j4JOYSzBA">
 
 ### Il processo di implementazione in VBA prevede i seguenti passaggi:
  
 1. Estrarre da SAP in un file Excel un elenco dei clienti bloccati e salvare nell'apposita cartella sovrascrivendo quella esistente.
 Il file più recente sarà sempre denominato `OB_C.xlsx` mentre il prospetto della settimana precedente, che servirà per integrare dati nel nuovo prospetto, sarà denominato `OB_P.xlsx`.
 1. Una volta salvato il file, l’utente apre il file `OB_C.xlsx` ed esegue la macro.
-<img src="http://drive.google.com/uc?export=view&id=1te-zUVomaguC-NgE7LPm-G5j4JOYSzBA">
-[image](https://drive.google.com/open?id=1te-zUVomaguC-NgE7LPm-G5j4JOYSzBA)
-![image](https://github.com/macraris-consulenza/ordinibloccati_excelvba/blob/master/ob_IMG_CartellaLavoro.PNG)
+<img src="http://drive.google.com/uc?export=view&id=1KA4am50VdBUlZclUyeINctn0Yo4aGSIq">
+
 ### Complimenti!
 
 # Installazione e Esecuzione
