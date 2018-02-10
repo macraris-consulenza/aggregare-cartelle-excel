@@ -1,8 +1,8 @@
 theme: jekyll-theme-cayman
-title: Progetto Ordini Bloccati Excel VBA
-description: Questo progetto descrive l'automazione della reportistica degli ordini bloccati in un'azienda farmaceutica.
+title: Progetto VBA Excel: Aggregare Diversi File Excel in Uno.
+description: Questo progetto descrive come abbinare diversi file Excel in un unico File Master
 show_downloads: true
 github:
-  zip_url: https://drive.google.com/open?id=1HVOjT6WjJBf_eRfKFCFI6YrDeXwUOoBG
+  zip_url: https://drive.google.com/open?id=1CZAnxkM2mZVVu2Dty7IR7jdcPoXiiuMd
   allproj_url: https://macraris-consulenza.github.io/
   contact_url: https://macraris.com/vba-macro/
