@@ -1,5 +1,3 @@
-# Libreria Progetti Macraris Excel VBA
-
 ## Aggregare cartelle Excel in un unico file
 
 Questa macro apre tutti i file di una cartella specifica e esegue una
@@ -9,7 +7,14 @@ Questa macro apre tutti i file di una cartella specifica e esegue una
  Viene fatto  uso di Cicli `Do while...loop`,
  `For each...Next` Inoltre si fa uso di condizione `IF...End IF`, struttura
  `With ...End With`.Uso di variabili tipo `Worksheet` e `Workbook`. 
- Invito a leggere il codice per scoprire di più.
+ Invito a leggere i `codici VBA` per scoprire di più.
+ 
+ ***
+ > Questa Macro puo permettere di risparmiare tempo nella funzione di **Cash Allocation** quando 
+ > ricevi da un Ente come Finlombarda pagamenti frazionati in tanti file Excel. Per elaborare questi
+ > file Excel potresti aver bisogno di raggrupparli in un unico file: Operazione che puo richiedere
+ > tanto tempo se ce ne sono parecchi. 
+ > _Con una Macro Excel, l'operazione si risolve in qualche secondo_
  
  ***
  
