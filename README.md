@@ -15,7 +15,7 @@ Questa macro apre tutti i file di una cartella specifica e esegue una
  > file Excel potresti aver bisogno di raggrupparli in un unico file: Operazione che puo richiedere
  > tanto tempo se ce ne sono parecchi. 
  > _Con una Macro Excel, l'operazione si risolve in qualche secondo_
- 
+ [A questo link un video esempio](https://youtu.be/t6ifrAJB6Xk)
  ***
  
 ``` vb
