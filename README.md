@@ -20,7 +20,7 @@ Questa macro apre tutti i file di una cartella specifica e esegue una
  
 ``` vb
 Sub UnisciFogliCartelle_UnicaCartella()
-
+''' Questa Macro viene fornita solo a titolo esemplicativo.
 '''\richiesta di esecuzione a l'utente
   ''Msgbox per fornire infos all'utente di cio' che succedera' una volta che avra premuto su ok
 Dim infos As Variant
