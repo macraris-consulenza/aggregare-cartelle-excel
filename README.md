@@ -1,4 +1,4 @@
-# Benvenuti nel Progetto Excel VBA
+# Libreria Progetti Macraris Excel VBA
 
 ## Aggregare cartelle Excel in un unico file
 
